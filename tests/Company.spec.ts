@@ -1,14 +1,14 @@
-import { Blockchain, SandboxContract, TreasuryContract } from '@ton-community/sandbox';
-import { toNano } from 'ton-core';
+import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
+import { toNano } from '@ton/core';
 import { Company } from '../wrappers/Company';
-import '@ton-community/test-utils';
 import { Fund } from '../wrappers/Fund';
+import '@ton/test-utils';
 
 describe('Company and fund', () => {
     let blockchain: Blockchain;
     let company: SandboxContract<Company>;
-    let fund: SandboxContract<Fund>
-    let deployer: SandboxContract<TreasuryContract>
+    let fund: SandboxContract<Fund>;
+    let deployer: SandboxContract<TreasuryContract>;
     beforeEach(async () => {
         blockchain = await Blockchain.create();
 
@@ -59,26 +59,30 @@ describe('Company and fund', () => {
         // blockchain and company are ready to use
     });
 
-    it('should withdraw', async()=>{
-        const res = await fund.send(deployer.getSender(), {
-            value: toNano('0.2')
-        }, {
-            $$type: 'Withdraw',
-            amount: 3n,
-            target: company.address
-        })
+    it('should withdraw', async () => {
+        const balanceFundBefore = await fund.getBalance();
+        console.log('balanceFundBefore - ', balanceFundBefore);
+        const res = await fund.send(
+            deployer.getSender(),
+            {
+                value: toNano('0.2'),
+            },
+            {
+                $$type: 'Withdraw',
+                amount: 3n,
+                target: company.address,
+            }
+        );
         // console.log(res)
-        
-        const balanceFund = await fund.getBalance()
-        const balanceCompany = await company.getBalance()
 
-        console.log("balanceFund - ", balanceFund)
+        const balanceFundAfter = await fund.getBalance();
+        const balanceCompany = await company.getBalance();
 
-        console.log("balanceCompany - ", balanceCompany)
+        console.log('balanceFundAfter - ', balanceFundAfter);
+
+        console.log('balanceCompany - ', balanceCompany);
 
         // expect(balanceFund).toEqual(7n);
         // expect(balanceCompany).toEqual(3n);
-
-        
-    })
+    });
 });

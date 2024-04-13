@@ -1,6 +1,6 @@
 import { toNano } from 'ton-core';
 import { BulkAdder } from '../wrappers/BulkAdder';
-import { NetworkProvider } from '@ton-community/blueprint';
+import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
     const bulkAdder = provider.open(await BulkAdder.fromInit());

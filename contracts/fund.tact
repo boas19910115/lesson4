@@ -1,20 +1,16 @@
 import "@stdlib/deploy";
-
-message Deposit{
+message Deposit {
     amount: Int as uint32;
 }
-
-message Withdraw{
+message Withdraw {
     amount: Int as uint32;
     target: Address;
 }
 
 contract Fund with Deployable {
-
     balance: Int as uint256;
-
-    init() {
-        self.balance = 10;    
+    init(){
+        self.balance = 10;
     }
 
     receive(){
@@ -22,23 +18,24 @@ contract Fund with Deployable {
     }
 
     receive(msg: Deposit){
-        self.balance = self.balance + msg.amount;
+        self.balance = (self.balance + msg.amount);
     }
 
     receive(msg: Withdraw){
-        require(self.balance>=msg.amount, "there isn't such balance on contract");
-        self.balance = self.balance - msg.amount;
+        require(self.balance >= msg.amount, "there isn't such balance on contract");
+        self.balance = (self.balance - msg.amount);
         send(SendParameters{
-            to: msg.target,
-            value: 0,
-            mode: SendRemainingValue + SendIgnoreErrors,
-            body: Deposit{amount: msg.amount}.toCell()
-        });
+                to: msg.target,
+                value: 0,
+                mode: (SendRemainingValue + SendIgnoreErrors),
+                body: Deposit{amount: msg.amount}.toCell()
+            }
+        );
     }
 
-    bounced(src: Deposit){
-        self.balance = self.balance + src.amount;
-    }
+    // bounced(src: Deposit){
+    //     self.balance = (self.balance + src.amount);
+    // }
 
     get fun balance(): Int {
         return self.balance;

@@ -1,6 +1,6 @@
 import { toNano } from 'ton-core';
 import { Messages } from '../wrappers/Messages';
-import { NetworkProvider } from '@ton-community/blueprint';
+import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
     const messages = provider.open(await Messages.fromInit());

@@ -1,6 +1,6 @@
 import { toNano } from 'ton-core';
 import { Counter } from '../wrappers/Counter';
-import { NetworkProvider } from '@ton-community/blueprint';
+import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
     const counter = provider.open(await Counter.fromInit(BigInt(Math.floor(Math.random() * 10000))));

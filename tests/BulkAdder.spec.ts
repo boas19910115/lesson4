@@ -1,9 +1,8 @@
-import { Blockchain, SandboxContract, TreasuryContract } from '@ton-community/sandbox';
-import { toNano } from 'ton-core';
+import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
+import { toNano } from '@ton/core';
 import { BulkAdder } from '../wrappers/BulkAdder';
-import '@ton-community/test-utils';
 import { Counter } from '../wrappers/Counter';
-import { count } from 'console';
+import '@ton/test-utils';
 
 describe('BulkAdder and Counter', () => {
     let blockchain: Blockchain;

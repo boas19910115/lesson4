@@ -1,6 +1,6 @@
 import { toNano } from 'ton-core';
 import { Fund } from '../wrappers/Fund';
-import { NetworkProvider } from '@ton-community/blueprint';
+import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
     const fund = provider.open(await Fund.fromInit());
